@@ -35,7 +35,7 @@ export default function Hero() {
           {/* Profile Picture */}
           <div className="mx-auto w-48 h-48 rounded-full overflow-hidden border-4 border-blue-500/30 mb-8 shadow-2xl">
             <img 
-              src={introduction?.profileImageUrl || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400"} 
+              src={introduction?.profileImageUrl || ""} 
               alt={`${introduction?.name || 'Profile'} Picture`} 
               className="w-full h-full object-cover" 
             />
