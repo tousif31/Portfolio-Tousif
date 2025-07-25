@@ -35,7 +35,7 @@ export default function Hero() {
           {/* Profile Picture */}
           <div className="mx-auto w-48 h-48 rounded-full overflow-hidden border-4 border-blue-500/30 mb-8 shadow-2xl">
             <img 
-              src={introduction?.profileImageUrl || ""} 
+              src={introduction?.profileImageUrl || "https://drive.google.com/file/d/1h6CiCSnI-kV3XYAMFfqlPaZJVTF00cGg/view?usp=drivesdk"} 
               alt={`${introduction?.name || 'Profile'} Picture`} 
               className="w-full h-full object-cover" 
             />
