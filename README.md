@@ -78,18 +78,15 @@ A modern, full-stack portfolio website built with React, Express.js, and Postgre
 
 
 
-├── client/ # React frontend
-│ ├── src/
-│ │ ├── components/ # React components
-│ │ ├── pages/ # Page components
-│ │ └── ...
-├── server/ # Express.js backend
-│ ├── routes/ # API routes
-│ ├── middleware/ # Express middleware
-│ └── ...
-├── shared/ # Shared utilities
-├── uploads/ # File uploads directory
-└── ...
+
+This structure shows:
+- **Frontend**: Complete React application with organized components, pages, hooks, and utilities
+- **Backend**: Express.js server with middleware, services, and API routes
+- **Shared**: Database schema shared between client and server
+- **Scripts**: Database setup and seeding utilities
+- **Configuration**: Various config files for build tools, styling, and database
+
+The project follows a clean separation of concerns with the client and server in separate directories, shared code in the `shared` folder, and utility scripts for database management.
 
 
 
