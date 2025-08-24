@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { publicApi } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -11,8 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter, Instagram } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-import emailjs from '@emailjs/browser';
+import emailjs from "@emailjs/browser";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -25,14 +24,14 @@ type ContactFormData = z.infer<typeof contactSchema>;
 
 export default function Contact() {
   const { toast } = useToast();
-  
+
   const { data: introduction } = useQuery({
-    queryKey: ['/api/introduction'],
+    queryKey: ["/api/introduction"],
     queryFn: () => publicApi.getIntroduction(),
   });
 
   const { data: socials } = useQuery({
-    queryKey: ['/api/socials'], 
+    queryKey: ["/api/socials"],
     queryFn: () => publicApi.getSocials(),
   });
 
@@ -52,27 +51,27 @@ export default function Contact() {
     setIsSending(true);
     try {
       await emailjs.send(
-        'service_9g6zx8g',
-        'template_xigw0lm',
+        "service_9g6zx8g",
+        "template_xigw0lm",
         {
           name: data.name,
           email: data.email,
-          subject: Contact Us: ${data.subject},
+          subject: `Contact Us: ${data.subject}`, // ✅ fixed here
           message: data.message,
           time: new Date().toLocaleString(),
         },
-        '61vlQc6-foXIHb1t7'
+        "61vlQc6-foXIHb1t7"
       );
       toast({
-        title: 'Message sent successfully!',
+        title: "Message sent successfully!",
         description: "I'll get back to you as soon as possible.",
       });
       form.reset();
     } catch (error: any) {
       toast({
-        title: 'Failed to send message',
-        description: error?.text || error?.message || 'An error occurred.',
-        variant: 'destructive',
+        title: "Failed to send message",
+        description: error?.text || error?.message || "An error occurred.",
+        variant: "destructive",
       });
     } finally {
       setIsSending(false);
@@ -85,9 +84,11 @@ export default function Contact() {
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4">Get In Touch</h2>
           <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-6"></div>
-          <p className="text-slate-400 text-lg">Ready to collaborate? Let's discuss your next project!</p>
+          <p className="text-slate-400 text-lg">
+            Ready to collaborate? Let's discuss your next project!
+          </p>
         </div>
-        
+
         <div className="grid md:grid-cols-2 gap-12">
           {/* Contact Info */}
           <div>
@@ -104,7 +105,7 @@ export default function Contact() {
                   </p>
                 </div>
               </div>
-              
+
               {introduction?.phone && (
                 <div className="flex items-center space-x-4">
                   <div className="w-12 h-12 bg-green-600/20 rounded-lg flex items-center justify-center">
@@ -116,7 +117,7 @@ export default function Contact() {
                   </div>
                 </div>
               )}
-              
+
               {introduction?.location && (
                 <div className="flex items-center space-x-4">
                   <div className="w-12 h-12 bg-purple-600/20 rounded-lg flex items-center justify-center">
@@ -129,13 +130,13 @@ export default function Contact() {
                 </div>
               )}
             </div>
-            
+
             {/* Social Links */}
             <div className="mt-8">
               <h4 className="text-lg font-semibold mb-4">Follow Me</h4>
               <div className="flex space-x-4">
                 {socials?.linkedin && (
-                  <a 
+                  <a
                     href={socials.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -145,7 +146,7 @@ export default function Contact() {
                   </a>
                 )}
                 {socials?.github && (
-                  <a 
+                  <a
                     href={socials.github}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -155,7 +156,7 @@ export default function Contact() {
                   </a>
                 )}
                 {socials?.twitter && (
-                  <a 
+                  <a
                     href={socials.twitter}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -165,7 +166,7 @@ export default function Contact() {
                   </a>
                 )}
                 {socials?.instagram && (
-                  <a 
+                  <a
                     href={socials.instagram}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -177,7 +178,7 @@ export default function Contact() {
               </div>
             </div>
           </div>
-          
+
           {/* Contact Form */}
           <Card className="bg-slate-800/50 border-slate-700">
             <CardContent className="p-6">
@@ -190,17 +191,17 @@ export default function Contact() {
                       <FormItem>
                         <FormLabel className="text-slate-300">Full Name</FormLabel>
                         <FormControl>
-                          <Input 
-                            placeholder="Your full name" 
+                          <Input
+                            placeholder="Your full name"
                             className="bg-slate-800 border-slate-600 text-white"
-                            {...field} 
+                            {...field}
                           />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="email"
@@ -208,18 +209,18 @@ export default function Contact() {
                       <FormItem>
                         <FormLabel className="text-slate-300">Email Address</FormLabel>
                         <FormControl>
-                          <Input 
-                            placeholder="your.email@example.com" 
+                          <Input
+                            placeholder="your.email@example.com"
                             type="email"
                             className="bg-slate-800 border-slate-600 text-white"
-                            {...field} 
+                            {...field}
                           />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="subject"
@@ -227,17 +228,17 @@ export default function Contact() {
                       <FormItem>
                         <FormLabel className="text-slate-300">Subject</FormLabel>
                         <FormControl>
-                          <Input 
-                            placeholder="Project discussion" 
+                          <Input
+                            placeholder="Project discussion"
                             className="bg-slate-800 border-slate-600 text-white"
-                            {...field} 
+                            {...field}
                           />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="message"
@@ -245,20 +246,20 @@ export default function Contact() {
                       <FormItem>
                         <FormLabel className="text-slate-300">Message</FormLabel>
                         <FormControl>
-                          <Textarea 
-                            placeholder="Tell me about your project..." 
+                          <Textarea
+                            placeholder="Tell me about your project..."
                             rows={5}
                             className="bg-slate-800 border-slate-600 text-white resize-none"
-                            {...field} 
+                            {...field}
                           />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                  
-                  <Button 
-                    type="submit" 
+
+                  <Button
+                    type="submit"
                     disabled={isSending}
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300"
                   >
