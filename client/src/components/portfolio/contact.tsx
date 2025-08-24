@@ -55,10 +55,11 @@ export default function Contact() {
         'service_9g6zx8g',
         'template_xigw0lm',
         {
-          from_name: data.name,
-          from_email: data.email,
-          subject: data.subject,
+          name: data.name,
+          email: data.email,
+          subject: Contact Us: ${data.subject},
           message: data.message,
+          time: new Date().toLocaleString(),
         },
         '61vlQc6-foXIHb1t7'
       );
